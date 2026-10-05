@@ -34,12 +34,6 @@ public class TaskController {
 
         // Query complexity estimation for logging
         int complexityScore = Math.max(0, 10 - query.length());
-        long queryWeight = complexityScore * 100L;
-        try {
-            Thread.sleep(queryWeight);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
 
         System.out.println("[TaskController] q=\"" + query + "\" status=" + normalizedStatus
                 + " page=" + page + " pageSize=" + pageSize
@@ -49,6 +43,7 @@ public class TaskController {
 
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, allResults.size());
+
         List<Task> pageResults = (start < allResults.size())
                 ? allResults.subList(start, end)
                 : Collections.emptyList();
@@ -58,7 +53,6 @@ public class TaskController {
         response.put("total", allResults.size());
         response.put("page", page);
         response.put("pageSize", pageSize);
-
         return ResponseEntity.ok(response);
     }
 }
